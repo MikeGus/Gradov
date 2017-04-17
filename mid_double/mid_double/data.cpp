@@ -56,10 +56,14 @@ void print_data(std::vector<float>& x, std::vector<float>& y, std::vector<float>
     std::cout << "Result: " << std::endl;
     std::cout << std::setfill('-') << std::setw(40) << "-" << std::endl;
     std::cout << std::setfill(' ');
-    std::cout << std::setw(8) << 'x'<< std::setw(8) << 'y' << std::setw(8) << "ro" << std::setw(8) << "fi" << std::endl;
+    std::cout << std::setw(8) << 'x'<< std::setw(8) << 'y' << std::setw(8) << "ro" << std::setw(8) << "fi" << \
+              std::setw(8) << 'k' << std::endl;
     for (size_t i = 0; i < x.size(); ++i) {
+        float dy = calculate_fi(coefs, x[i] + 0.01) - calculate_fi(coefs, x[i] - 0.01);
+        float dx = 0.02;
+        float k = dy / dx;
         std::cout << std::setw(8) << x[i] << std::setw(8) << y[i] << std::setw(8) << ro[i] << std::setw(8) \
-                  << calculate_fi(coefs, x[i]) << std::endl;
+                  << calculate_fi(coefs, x[i]) << std::setw(8) << k << std::endl;
     }
     std::cout << std::setfill('-') << std::setw(40) << "-" << std::endl;
     std::cout << std::setfill(' ');
