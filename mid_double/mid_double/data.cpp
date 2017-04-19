@@ -2,10 +2,9 @@
 
 #include "function.h"
 
-void get_num_of_intervals(size_t& intervals)
+void get_num_of_intervals(size_t& intervals, std::istream& input)
 {
-    std::cout << "Enter number of intervals: ";
-    std::cin >> intervals;
+    input >> intervals;
 }
 
 void get_borders(float& begin, float& end)
@@ -48,8 +47,17 @@ void fill_x(std::vector<float>& result, std::vector<float>& source, float (*func
     }
 }
 
-void print_data(std::vector<float>& x, std::vector<float>& y, std::vector<float>& ro, std::vector<float>& coefs)
+void fill_x(std::vector<float>& result, std::istream& source, size_t intervals)
 {
+    result.clear();
+    for (size_t i = 0; i <= intervals; ++i) {
+        float buf;
+        source >> buf;
+        result.push_back(buf);
+    }
+}
+
+void print_data(std::vector<float>& x, std::vector<float>& y, std::vector<float>& ro, std::vector<float>& coefs, int size) {
     std::cout << std::setprecision(3);
     std::cout << std::fixed;
     std::cout << std::setfill('-') << std::setw(40) << "-" << std::endl;
@@ -59,11 +67,11 @@ void print_data(std::vector<float>& x, std::vector<float>& y, std::vector<float>
     std::cout << std::setw(8) << 'x'<< std::setw(8) << 'y' << std::setw(8) << "ro" << std::setw(8) << "fi" << \
               std::setw(8) << 'k' << std::endl;
     for (size_t i = 0; i < x.size(); ++i) {
-        float dy = calculate_fi(coefs, x[i] + 0.01) - calculate_fi(coefs, x[i] - 0.01);
+        float dy = calculate_fi(coefs, x[i] + 0.01, size) - calculate_fi(coefs, x[i] - 0.01, size);
         float dx = 0.02;
         float k = dy / dx;
         std::cout << std::setw(8) << x[i] << std::setw(8) << y[i] << std::setw(8) << ro[i] << std::setw(8) \
-                  << calculate_fi(coefs, x[i]) << std::setw(8) << k << std::endl;
+                  << calculate_fi(coefs, x[i], size) << std::setw(8) << k << std::endl;
     }
     std::cout << std::setfill('-') << std::setw(40) << "-" << std::endl;
     std::cout << std::setfill(' ');

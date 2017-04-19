@@ -1,11 +1,10 @@
-#include "matrix.h"
+#include  "matrix.h"
 
 void fill_matrix(std::vector<std::vector<float>>& matrix, std::vector<float>& coefs, std::vector<float>& x, \
-                 std::vector<float>& y, std::vector<float>& ro)
+                 std::vector<float>& y, std::vector<float>& ro, size_t size)
 {
     matrix.clear();
     coefs.clear();
-    size_t size = x.size();
     matrix.resize(size);
     coefs.resize(size);
 
@@ -16,13 +15,13 @@ void fill_matrix(std::vector<std::vector<float>>& matrix, std::vector<float>& co
     for (size_t i = 0; i < size; ++i) {
         for (size_t j = 0; j < size; ++j) {
             float sum = 0;
-            for (size_t k = 0; k < size; ++k) {
+            for (size_t k = 0; k < x.size(); ++k) {
                 sum += ro[k] * pow(x[k], i + j);
             }
             matrix[i][j] = sum;
         }
         float sum = 0;
-        for (size_t k = 0; k < size; ++k) {
+        for (size_t k = 0; k < x.size(); ++k) {
             sum += ro[k] * y[k] * pow(x[k], i);
         }
         coefs[i] = sum;
